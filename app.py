@@ -3,6 +3,10 @@ from flask import Flask, request
 from flask_restful import Resource, Api
 from flask_cors import CORS
 
+# import library flask sqlalchemy
+from flask_sqlalchemy import SQLAlchemy
+import os
+
 # inisiasi object
 app = Flask(__name__)
 api = Api(app)
