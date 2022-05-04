@@ -1,5 +1,4 @@
 # import library
-from urllib import response
 from flask import Flask, request
 from flask_restful import Resource, Api
 from flask_cors import CORS
@@ -84,8 +83,48 @@ class ContohResource(Resource):
         }
         return response, 200
 
+# membuat class baru edit & hapus data
+class UpdateResource(Resource):
+    def put(self, id):
+        # konsumsi id untuk query db
+        # pilih data yang ingin di edit berdasarkan id
+        query = ModelDatabase.query.get(id)
+
+        # form untuk edit data
+        editNama = request.form["nama"]
+        editUmur = request.form["umur"]
+        editAlamat = request.form["alamat"]
+
+        # mereplace nilai yang ada di field
+        query.nama = editNama
+        query.umur = editUmur
+        query.alamat = editAlamat
+        db.session.commit()
+
+        response = {
+            "msg": "edit data berhasil",
+            "code": 200
+        }
+        return response
+
+    # delete berdasarkan id
+    def delete(self, id):
+        query = ModelDatabase.query.get(id)
+
+        # panggil method untuk delete data berdasarkan id
+        db.session.delete(query)
+        db.session.commit()
+
+        response = {
+            "msg": "delete data berhasil",
+            "code": 200
+        }
+        return response
+
+
 # setup resource
 api.add_resource(ContohResource, "/api", methods=["GET", "POST"])
+api.add_resource(UpdateResource, "/api/<id>", methods=["PUT","DELETE"])
 
 if __name__ == "__main__":
     app.run(debug=True)
