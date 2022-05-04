@@ -12,6 +12,14 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)
 
+# inisiasi object flask-sqlalchemy
+db = SQLAlchemy(app)
+
+# konfigurasi database
+basedir = os.path.dirname(os.path.abspath(__file__))
+database = "sqlite:///" + os.path.join(basedir, "db.sqlite")
+app.config["SQLALCHEMY_DATABASE_URI"] = database
+
 # inisiasi variabel kosong bertipe dict
 identitas = {}
 
