@@ -83,6 +83,19 @@ class ContohResource(Resource):
         }
         return response, 200
 
+    def delete(self):
+        query = ModelDatabase.query.all()
+        # looping
+        for data in query:
+            db.session.delete(data)
+            db.session.commit()
+
+        response = {
+            "msg": "semua data berhasil dihapus",
+            "code": 200
+        }
+        return response
+
 # membuat class baru edit & hapus data
 class UpdateResource(Resource):
     def put(self, id):
@@ -123,7 +136,7 @@ class UpdateResource(Resource):
 
 
 # setup resource
-api.add_resource(ContohResource, "/api", methods=["GET", "POST"])
+api.add_resource(ContohResource, "/api", methods=["GET", "POST", "DELETE"])
 api.add_resource(UpdateResource, "/api/<id>", methods=["PUT","DELETE"])
 
 if __name__ == "__main__":
