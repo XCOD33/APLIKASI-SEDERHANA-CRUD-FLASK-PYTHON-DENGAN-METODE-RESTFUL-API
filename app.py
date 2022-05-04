@@ -8,16 +8,31 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)
 
+# inisiasi variabel kosong bertipe dict
+identitas = {}
+
 # membuat class resource
 class ContohResource(Resource):
     def get(self):
+        # response = {
+        #     "msg": "Hello World, this is my first Restful"
+        # }
+        return identitas
+
+    def post(self):
+        name = request.form["nama"]
+        age = request.form["umur"]
+        
+        identitas["nama"] = name
+        identitas["umur"] = age
+        
         response = {
-            "msg": "Hello World, this is my first Restful"
+            "msg": "Data Berhasil Ditambahkan"
         }
         return response
 
 # setup resource
-api.add_resource(ContohResource, "/api", methods=["GET"])
+api.add_resource(ContohResource, "/api", methods=["GET", "POST"])
 
 if __name__ == "__main__":
     app.run(debug=True)
