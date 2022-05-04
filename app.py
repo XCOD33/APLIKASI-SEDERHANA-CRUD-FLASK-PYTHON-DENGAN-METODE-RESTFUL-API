@@ -53,6 +53,7 @@ class ContohResource(Resource):
         # melakukan iterasi pada model database dengan teknik list comprehension
         output = [
             {
+                "id":data.id,
                 "nama":data.nama,
                 "umur":data.umur,
                 "alamat":data.alamat
